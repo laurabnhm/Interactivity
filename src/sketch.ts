@@ -20,6 +20,12 @@ const params = {
 
 var tweets;
 var filteredTweet = [];
+var notHappening = [];
+var notUs = [];
+var notBad = [];
+var solutionNotWorking = [];
+var scienceUnreliable = [];
+
 var author = [
   'capitalresearch', 'ceidotorg',       'NationalCenter',  'ReasonFdn',
   'ACSHorg',         'CatoInstitute',   'CFACT',           'FoF_Liberty',
@@ -55,7 +61,7 @@ function setup() {
   // Filter tweets according category
 
   // 1) It's not happening
-  let notHappening = filteredTweet.filter((a) => {
+  notHappening = filteredTweet.filter((a) => {
     if ((a.category).includes('1_')) {
       return a
     }
@@ -63,7 +69,7 @@ function setup() {
   console.log(notHappening)
 
   // 2) It's not us
-  let notUs = filteredTweet.filter((a) => {
+  notUs = filteredTweet.filter((a) => {
     if ((a.category).includes('2_')) {
       return a
     }
@@ -71,7 +77,7 @@ function setup() {
   console.log(notUs)
 
   // 3) It's not bad
-  let notBad = filteredTweet.filter((a) => {
+  notBad = filteredTweet.filter((a) => {
     if ((a.category).includes('3_')) {
       return a
     }
@@ -79,7 +85,7 @@ function setup() {
   console.log(notBad)
 
   // 4) Solutions won't work
-  let solutionNotWorking = filteredTweet.filter((a) => {
+  solutionNotWorking = filteredTweet.filter((a) => {
     if ((a.category).includes('4_')) {
       return a
     }
@@ -87,7 +93,7 @@ function setup() {
   console.log(solutionNotWorking)
 
   // 5) Climate science/scientists are unreliable
-  let scienceUnreliable = filteredTweet.filter((a) => {
+  scienceUnreliable = filteredTweet.filter((a) => {
     if ((a.category).includes('5_')) {
       return a
     }
@@ -118,6 +124,80 @@ function windowResized() {
 // -------------------
 
 function draw() {
-  background(30, 10, 60);
+  background(30, 10, 60)
   blendMode(LIGHTEST)
+
+  // pos
+  var x = 100
+  var y = -50
+  // color
+  var r = 50
+  var g = 60
+  var b = 40
+
+
+  // 1) It's not happening
+  for (var i = 0; i < author.length; i++) {
+    let elements = notHappening.filter((a) => {
+      if (a.author == author[i]) {
+        return a
+      }
+    });
+    fill(r + i * 5, g + 1 * 2, b + i * 6)
+    rect(x, y, 30, elements.length * 2)
+    y += elements.length * 2
+  }
+
+  // 2) It's not us
+  y = -50
+  x += 50
+  for (var i = 0; i < author.length; i++) {
+    let elements = notUs.filter((a) => {
+      if (a.author == author[i]) {
+        return a
+      }
+    });
+    fill(255, 255, 255)
+    rect(x, y, 30, elements.length * 2)
+    y += elements.length * 2
+  }
+
+  // 3) It's not bad
+  y = -50
+  x += 50
+  for (var i = 0; i < author.length; i++) {
+    let elements = notBad.filter((a) => {
+      if (a.author == author[i]) {
+        return a
+      }
+    });
+    rect(x, y, 30, elements.length * 2)
+    y += elements.length * 2
+  }
+
+  // 4) Solutions won't work
+  y = -50
+  x += 50
+  for (var i = 0; i < author.length; i++) {
+    let elements = solutionNotWorking.filter((a) => {
+      if (a.author == author[i]) {
+        return a
+      }
+    });
+    rect(x, y, 30, elements.length * 2)
+    y += elements.length * 2
+  }
+
+  // 5) Climate science/scientists are unreliable
+  y = -50
+  x += 50
+  for (var i = 0; i < author.length; i++) {
+    let elements = scienceUnreliable.filter((a) => {
+      if (a.author == author[i]) {
+        return a
+      }
+    });
+    rect(x, y, 30, elements.length * 2)
+    y += elements.length * 2
+  }
 }
