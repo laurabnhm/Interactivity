@@ -40,16 +40,41 @@ var author = [
   'KHerriage',       'JaggerMickOZ',    'ClimatePoet',     'ClimateRealists'
 ];
 
+var author2 = [
+  'capitalresearch', 'ceidotorg',       'NationalCenter',  'CatoInstitute',
+  'CFACT',           'FreedomWorks',    'HeartlandInst',   'ClimateSkeptic',
+  'ClimateAudit',    'JunkScience',     'ManicBeancount',  'NoTricksZone',
+  'RogTallbloke',    'wattsupwiththat', 'Fromaway21',      'IowaClimate',
+  'WEschenbach',     'GasPriceWizard',  'MAVERIC22440705', 'BjornLomborg',
+  'PeterDClack',     'socratesccost',   'rglover',         'TreforJones2',
+  'LukeStPaul1',     'KHerriage',       'JaggerMickOZ',    'ClimatePoet',
+  'ClimateRealists'
+];
+
 // ReasonFdn, ACSHorg, FoF_Liberty, FraserInstitute, WilcoHeritage,
 // HudsonInstitute, ManhattanInst, WAPolicyCente, GalileoMovement,
 // hockeyschtick1, JoanneNova, MasterResource, NOconsensus, thegwpfcom,
 // msroberts0619
 
-function preload() {
-  tweets = loadJSON('../src/tweetszkm_202203.json');
-}
+var colors =
+    [
+      '#012305', '#123150', '#234300', '#345618', '#456729', '#567810',
+      '#67892B', '#789A0C', '#89AB02', '#9ABC4E', '#012305', '#123456',
+      '#234567', '#345608', '#456789', '#56789A', '#67890B', '#780A0C',
+      '#89A0C1', '#9AB0DE', '#012345', '#123456', '#234567', '#345678',
+      '#456780', '#567890', '#6789A0', '#789ABC', '#89ABC0', '#9A1C0E',
+      '#012345', '#123426', '#204507', '#345078', '#456719', '#56780A',
+      '#60890B', '#7090BC', '#80AB1D', '#90B0DE', '#005000', '#10230F',
+      '#123456', '#234267'
+    ]
 
-function setup() {
+    function
+    preload() {
+      tweets = loadJSON('../src/tweetszkm_202203.json');
+    }
+
+function
+setup() {
   // Filter tweets without category
   for (var i = 0; i < 5364; ++i) {
     if (tweets[i]['category'] && tweets[i]['category'] != '0_0')
@@ -114,7 +139,8 @@ function setup() {
   p6_CreateCanvas()
 }
 
-function windowResized() {
+function
+windowResized() {
   p6_ResizeCanvas()
 }
 
@@ -123,81 +149,48 @@ function windowResized() {
 //       Drawing
 // -------------------
 
-function draw() {
-  background(30, 10, 60)
+function
+draw() {
+  background(255, 255, 255)
   blendMode(LIGHTEST)
-
-  // pos
-  var x = 100
-  var y = -50
-  // color
-  var r = 50
-  var g = 60
-  var b = 40
+  noLoop()
 
 
   // 1) It's not happening
-  for (var i = 0; i < author.length; i++) {
-    let elements = notHappening.filter((a) => {
-      if (a.author == author[i]) {
-        return a
-      }
-    });
-    fill(r + i * 5, g + 1 * 2, b + i * 6)
-    rect(x, y, 30, elements.length * 2)
-    y += elements.length * 2
-  }
+  var x = -100
+  var y = 200
+  displayBarGraph(x, y, notHappening)
 
   // 2) It's not us
-  y = -50
+  y = 200
   x += 50
-  for (var i = 0; i < author.length; i++) {
-    let elements = notUs.filter((a) => {
-      if (a.author == author[i]) {
-        return a
-      }
-    });
-    fill(255, 255, 255)
-    rect(x, y, 30, elements.length * 2)
-    y += elements.length * 2
-  }
+  displayBarGraph(x, y, notUs)
 
   // 3) It's not bad
-  y = -50
+  y = 200
   x += 50
-  for (var i = 0; i < author.length; i++) {
-    let elements = notBad.filter((a) => {
-      if (a.author == author[i]) {
-        return a
-      }
-    });
-    rect(x, y, 30, elements.length * 2)
-    y += elements.length * 2
-  }
+  displayBarGraph(x, y, notBad)
 
   // 4) Solutions won't work
-  y = -50
+  y = 200
   x += 50
-  for (var i = 0; i < author.length; i++) {
-    let elements = solutionNotWorking.filter((a) => {
-      if (a.author == author[i]) {
-        return a
-      }
-    });
-    rect(x, y, 30, elements.length * 2)
-    y += elements.length * 2
-  }
+  displayBarGraph(x, y, solutionNotWorking)
 
   // 5) Climate science/scientists are unreliable
-  y = -50
+  y = 200
   x += 50
+  displayBarGraph(x, y, scienceUnreliable)
+}
+
+function displayBarGraph(x, y, category) {
   for (var i = 0; i < author.length; i++) {
-    let elements = scienceUnreliable.filter((a) => {
+    let elements = category.filter((a) => {
       if (a.author == author[i]) {
         return a
       }
     });
+    y -= elements.length * 2
+    fill(colors[i])
     rect(x, y, 30, elements.length * 2)
-    y += elements.length * 2
   }
 }
