@@ -6,12 +6,22 @@ const gui = new dat.GUI()
 
 // Nombre = initialisation lors de l'ouverture de la fenêtre
 const params = {
-  nombre_ellipse: 3,
+  capitalresearch: true,
+  ceidotorg: true,
+  NationalCenter: true,
+  CatoInstitute: true,
+  CFACT: true,
+  FreedomWorks: true,
   Download_Image: () => save()
 }
 
                // gui.add (params, "Nom du paramètre", minimum, maximum, pas)
-               gui.add(params, 'nombre_ellipse', 1, 50, 1)
+               gui.add(params, 'capitalresearch')
+gui.add(params, 'ceidotorg')
+gui.add(params, 'NationalCenter')
+gui.add(params, 'CatoInstitute')
+gui.add(params, 'CFACT')
+gui.add(params, 'FreedomWorks')
 
 
 // -------------------
@@ -80,8 +90,6 @@ setup() {
     if (tweets[i]['category'] && tweets[i]['category'] != '0_0')
       filteredTweet.push(tweets[i])
   }
-  // console.log(filteredTweet)
-
 
   // Filter tweets according category
 
@@ -125,17 +133,6 @@ setup() {
   });
   console.log(scienceUnreliable)
 
-
-  // filter with author
-  for (var i = 0; i < author.length; i++) {
-    let x = filteredTweet.filter((a) => {
-      if (a.author == author[i]) {
-        return a
-      }
-    });
-    // console.log(x)
-  }
-
   p6_CreateCanvas()
 }
 
@@ -153,7 +150,6 @@ function
 draw() {
   background(255, 255, 255)
   blendMode(LIGHTEST)
-  noLoop()
 
 
   // 1) It's not happening
@@ -183,9 +179,9 @@ draw() {
 }
 
 function displayBarGraph(x, y, category) {
-  for (var i = 0; i < author.length; i++) {
+  for (var i = 0; i < author2.length; i++) {
     let elements = category.filter((a) => {
-      if (a.author == author[i]) {
+      if (a.author == author2[i] && params[author2[i]] == true) {
         return a
       }
     });
