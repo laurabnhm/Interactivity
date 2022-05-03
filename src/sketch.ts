@@ -12,16 +12,62 @@ const params = {
   CatoInstitute: true,
   CFACT: true,
   FreedomWorks: true,
+  HeartlandInst: true,
+  ClimateSkeptic: true,
+  ClimateAudit: true,
+  JunkScience: true,
+  ManicBeancount: true,
+  NoTricksZone: true,
+  RogTallbloke: true,
+  wattsupwiththat: true,
+  Fromaway21: true,
+  IowaClimate: true,
+  WEschenbach: true,
+  GasPriceWizard: true,
+  MAVERIC22440705: true,
+  BjornLomborg: true,
+  PeterDClack: true,
+  socratesccost: true,
+  rglover: true,
+  TreforJones2: true,
+  LukeStPaul1: true,
+  KHerriage: true,
+  JaggerMickOZ: true,
+  ClimatePoet: true,
+  ClimateRealists: true,
   Download_Image: () => save()
-}
+};
 
-               // gui.add (params, "Nom du paramètre", minimum, maximum, pas)
-               gui.add(params, 'capitalresearch')
+// gui.add (params, "Nom du paramètre", minimum, maximum, pas)
+gui.add(params, 'capitalresearch')
 gui.add(params, 'ceidotorg')
 gui.add(params, 'NationalCenter')
 gui.add(params, 'CatoInstitute')
 gui.add(params, 'CFACT')
 gui.add(params, 'FreedomWorks')
+gui.add(params, 'HeartlandInst')
+gui.add(params, 'ClimateSkeptic')
+gui.add(params, 'ClimateAudit')
+gui.add(params, 'JunkScience')
+gui.add(params, 'ManicBeancount')
+gui.add(params, 'NoTricksZone')
+gui.add(params, 'RogTallbloke')
+gui.add(params, 'wattsupwiththat')
+gui.add(params, 'Fromaway21')
+gui.add(params, 'IowaClimate')
+gui.add(params, 'WEschenbach')
+gui.add(params, 'GasPriceWizard')
+gui.add(params, 'MAVERIC22440705')
+gui.add(params, 'BjornLomborg')
+gui.add(params, 'PeterDClack')
+gui.add(params, 'socratesccost')
+gui.add(params, 'rglover')
+gui.add(params, 'TreforJones2')
+gui.add(params, 'LukeStPaul1')
+gui.add(params, 'KHerriage')
+gui.add(params, 'JaggerMickOZ')
+gui.add(params, 'ClimatePoet')
+gui.add(params, 'ClimateRealists')
 
 
 // -------------------
@@ -36,7 +82,7 @@ var notBad = [];
 var solutionNotWorking = [];
 var scienceUnreliable = [];
 
-var author = [
+/*var author = [
   'capitalresearch', 'ceidotorg',       'NationalCenter',  'ReasonFdn',
   'ACSHorg',         'CatoInstitute',   'CFACT',           'FoF_Liberty',
   'FraserInstitute', 'FreedomWorks',    'HeartlandInst',   'WilcoHeritage',
@@ -48,8 +94,14 @@ var author = [
   'GasPriceWizard',  'MAVERIC22440705', 'BjornLomborg',    'PeterDClack',
   'socratesccost',   'rglover',         'TreforJones2',    'LukeStPaul1',
   'KHerriage',       'JaggerMickOZ',    'ClimatePoet',     'ClimateRealists'
-];
+];*/
+// Les auteurs dont aucun des tweets n'est catégorisé
+// ReasonFdn, ACSHorg, FoF_Liberty, FraserInstitute, WilcoHeritage,
+// HudsonInstitute, ManhattanInst, WAPolicyCente, GalileoMovement,
+// hockeyschtick1, JoanneNova, MasterResource, NOconsensus, thegwpfcom,
+// msroberts0619
 
+// author list filtered
 var author2 = [
   'capitalresearch', 'ceidotorg',       'NationalCenter',  'CatoInstitute',
   'CFACT',           'FreedomWorks',    'HeartlandInst',   'ClimateSkeptic',
@@ -61,30 +113,20 @@ var author2 = [
   'ClimateRealists'
 ];
 
-// ReasonFdn, ACSHorg, FoF_Liberty, FraserInstitute, WilcoHeritage,
-// HudsonInstitute, ManhattanInst, WAPolicyCente, GalileoMovement,
-// hockeyschtick1, JoanneNova, MasterResource, NOconsensus, thegwpfcom,
-// msroberts0619
+// colors for each author
+var colors = [
+  '#012305', '#A23150', '#2F4300', '#3456F8', '#456729', '#560810',
+  '#67892B', '#780A0C', '#89A002', '#9A0C4E', '#0A2305', '#123456',
+  '#234567', '#3A5608', '#45A789', '#56789A', '#67890B', '#780A0C',
+  '#89A0C1', '#9AB0DE', '#0B2345', '#1B3456', '#A34567', '#B45678',
+  '#456780', '#567890', '#6789A0', '#789ABC', '#89ABC0'
+];
 
-var colors =
-    [
-      '#012305', '#123150', '#234300', '#345618', '#456729', '#567810',
-      '#67892B', '#789A0C', '#89AB02', '#9ABC4E', '#012305', '#123456',
-      '#234567', '#345608', '#456789', '#56789A', '#67890B', '#780A0C',
-      '#89A0C1', '#9AB0DE', '#012345', '#123456', '#234567', '#345678',
-      '#456780', '#567890', '#6789A0', '#789ABC', '#89ABC0', '#9A1C0E',
-      '#012345', '#123426', '#204507', '#345078', '#456719', '#56780A',
-      '#60890B', '#7090BC', '#80AB1D', '#90B0DE', '#005000', '#10230F',
-      '#123456', '#234267'
-    ]
+function preload() {
+  tweets = loadJSON('../src/tweetszkm_202203.json');
+}
 
-    function
-    preload() {
-      tweets = loadJSON('../src/tweetszkm_202203.json');
-    }
-
-function
-setup() {
+function setup() {
   // Filter tweets without category
   for (var i = 0; i < 5364; ++i) {
     if (tweets[i]['category'] && tweets[i]['category'] != '0_0')
@@ -136,8 +178,7 @@ setup() {
   p6_CreateCanvas()
 }
 
-function
-windowResized() {
+function windowResized() {
   p6_ResizeCanvas()
 }
 
@@ -146,11 +187,9 @@ windowResized() {
 //       Drawing
 // -------------------
 
-function
-draw() {
+function draw() {
   background(255, 255, 255)
-  blendMode(LIGHTEST)
-
+  noStroke()
 
   // 1) It's not happening
   var x = -100
