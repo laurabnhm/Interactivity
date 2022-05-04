@@ -198,33 +198,33 @@ function windowResized() {
 
 function draw() {
   background(255, 255, 255)
-  /*setGradient(
+  setGradient(
       -width, -height, 2 * width, 2 * height, mauve_color, purple_color,
-      Y_AXIS);*/
+      Y_AXIS);
   noStroke()
 
   // 1) It's not happening
-  var x = -100
-  var y = 200
+  var x = 260
+  var y = 600
   displayBarGraph(x, y, notHappening)
 
   // 2) It's not us
-  y = 200
+  y = 600
   x += 50
   displayBarGraph(x, y, notUs)
 
   // 3) It's not bad
-  y = 200
+  y = 600
   x += 50
   displayBarGraph(x, y, notBad)
 
   // 4) Solutions won't work
-  y = 200
+  y = 600
   x += 50
   displayBarGraph(x, y, solutionNotWorking)
 
   // 5) Climate science/scientists are unreliable
-  y = 200
+  y = 600
   x += 50
   displayBarGraph(x, y, scienceUnreliable)
 }
@@ -239,7 +239,19 @@ function displayBarGraph(x, y, category) {
     y -= elements.length * 2
     fill(colors[i])
     rect(x, y, 30, elements.length * 2)
+
+    // on mouse hover, display author name + nbtweets
+    if (mouseX > x && mouseX < (x + 30) && mouseY > (y) &&
+        mouseY < (y + elements.length * 2)) {
+      displayAuthorInfo(author2[i], elements.length)
+    }
   }
+}
+
+function displayAuthorInfo(name, nbtweets) {
+  textSize(12)
+  textFont('Poppins')
+  text(name + ' : ' + nbtweets + ' tweets', 100, 150)
 }
 
 function setGradient(x, y, w, h, color1, color2, axis) {

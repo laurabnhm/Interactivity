@@ -56,8 +56,7 @@ function __centerCanvas() {
  * option. You can change the option in the p6/chooseCanvasSize.ts file.
  */
 function p6_CreateCanvas() {
-  __canvas =
-      createCanvas(__desiredCanvasWidth(), __desiredCanvasHeight(), WEBGL)
+  __canvas = createCanvas(__desiredCanvasWidth(), __desiredCanvasHeight())
   __centerCanvas()
 }
 /**
