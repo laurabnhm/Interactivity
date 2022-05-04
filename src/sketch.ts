@@ -39,35 +39,35 @@ const params = {
 };
 
 // gui.add (params, "Nom du paramètre", minimum, maximum, pas)
-gui.add(params, 'capitalresearch')
-gui.add(params, 'ceidotorg')
-gui.add(params, 'NationalCenter')
-gui.add(params, 'CatoInstitute')
-gui.add(params, 'CFACT')
-gui.add(params, 'FreedomWorks')
-gui.add(params, 'HeartlandInst')
-gui.add(params, 'ClimateSkeptic')
-gui.add(params, 'ClimateAudit')
-gui.add(params, 'JunkScience')
-gui.add(params, 'ManicBeancount')
-gui.add(params, 'NoTricksZone')
-gui.add(params, 'RogTallbloke')
-gui.add(params, 'wattsupwiththat')
-gui.add(params, 'Fromaway21')
-gui.add(params, 'IowaClimate')
-gui.add(params, 'WEschenbach')
-gui.add(params, 'GasPriceWizard')
-gui.add(params, 'MAVERIC22440705')
 gui.add(params, 'BjornLomborg')
-gui.add(params, 'PeterDClack')
-gui.add(params, 'socratesccost')
-gui.add(params, 'rglover')
-gui.add(params, 'TreforJones2')
-gui.add(params, 'LukeStPaul1')
-gui.add(params, 'KHerriage')
-gui.add(params, 'JaggerMickOZ')
+gui.add(params, 'capitalresearch')
+gui.add(params, 'CatoInstitute')
+gui.add(params, 'ceidotorg')
+gui.add(params, 'CFACT')
+gui.add(params, 'ClimateAudit')
 gui.add(params, 'ClimatePoet')
 gui.add(params, 'ClimateRealists')
+gui.add(params, 'ClimateSkeptic')
+gui.add(params, 'FreedomWorks')
+gui.add(params, 'Fromaway21')
+gui.add(params, 'GasPriceWizard')
+gui.add(params, 'HeartlandInst')
+gui.add(params, 'IowaClimate')
+gui.add(params, 'JunkScience')
+gui.add(params, 'JaggerMickOZ')
+gui.add(params, 'KHerriage')
+gui.add(params, 'LukeStPaul1')
+gui.add(params, 'ManicBeancount')
+gui.add(params, 'MAVERIC22440705')
+gui.add(params, 'NationalCenter')
+gui.add(params, 'NoTricksZone')
+gui.add(params, 'PeterDClack')
+gui.add(params, 'rglover')
+gui.add(params, 'RogTallbloke')
+gui.add(params, 'socratesccost')
+gui.add(params, 'TreforJones2')
+gui.add(params, 'wattsupwiththat')
+gui.add(params, 'WEschenbach')
 
 
 // -------------------
@@ -103,14 +103,14 @@ var scienceUnreliable = [];
 
 // author list filtered
 var author2 = [
-  'capitalresearch', 'ceidotorg',       'NationalCenter',  'CatoInstitute',
-  'CFACT',           'FreedomWorks',    'HeartlandInst',   'ClimateSkeptic',
-  'ClimateAudit',    'JunkScience',     'ManicBeancount',  'NoTricksZone',
-  'RogTallbloke',    'wattsupwiththat', 'Fromaway21',      'IowaClimate',
-  'WEschenbach',     'GasPriceWizard',  'MAVERIC22440705', 'BjornLomborg',
-  'PeterDClack',     'socratesccost',   'rglover',         'TreforJones2',
-  'LukeStPaul1',     'KHerriage',       'JaggerMickOZ',    'ClimatePoet',
-  'ClimateRealists'
+  'BjornLomborg',   'capitalresearch', 'CatoInstitute',  'ceidotorg',
+  'CFACT',          'ClimateAudit',    'ClimatePoet',    'ClimateRealists',
+  'ClimateSkeptic', 'FreedomWorks',    'Fromaway21',     'GasPriceWizard',
+  'HeartlandInst',  'IowaClimate',     'JaggerMickOZ',   'JunkScience',
+  'KHerriage',      'LukeStPaul1',     'ManicBeancount', 'MAVERIC22440705',
+  'NationalCenter', 'NoTricksZone',    'PeterDClack',    'rglover',
+  'RogTallbloke',   'socratesccost',   'TreforJones2',   'wattsupwiththat',
+  'WEschenbach'
 ];
 
 // colors for each author
