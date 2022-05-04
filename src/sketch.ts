@@ -122,6 +122,11 @@ var colors = [
   '#456780', '#567890', '#6789A0', '#789ABC', '#89ABC0'
 ];
 
+// Constants
+const Y_AXIS = 1;
+const X_AXIS = 2;
+let mauve_color, purple_color, color1, color2;
+
 function preload() {
   tweets = loadJSON('../src/tweetszkm_202203.json');
 }
@@ -176,6 +181,10 @@ function setup() {
   console.log(scienceUnreliable)
 
   p6_CreateCanvas()
+
+  // Define colors (linear gradient)
+  mauve_color = color(96, 100, 235);
+  purple_color = color(35, 12, 53);
 }
 
 function windowResized() {
@@ -189,6 +198,9 @@ function windowResized() {
 
 function draw() {
   background(255, 255, 255)
+  /*setGradient(
+      -width, -height, 2 * width, 2 * height, mauve_color, purple_color,
+      Y_AXIS);*/
   noStroke()
 
   // 1) It's not happening
@@ -227,5 +239,27 @@ function displayBarGraph(x, y, category) {
     y -= elements.length * 2
     fill(colors[i])
     rect(x, y, 30, elements.length * 2)
+  }
+}
+
+function setGradient(x, y, w, h, color1, color2, axis) {
+  noFill();
+
+  if (axis === Y_AXIS) {
+    // Top to bottom gradient
+    for (let i = y; i <= y + h; i++) {
+      let inter = map(i, y, y + h, 0, 1);
+      let c = lerpColor(color1, color2, inter);
+      stroke(c);
+      line(x, i, x + w, i);
+    }
+  } else if (axis === X_AXIS) {
+    // Left to right gradient
+    for (let i = x; i <= x + w; i++) {
+      let inter = map(i, x, x + w, 0, 1);
+      let c = lerpColor(color1, color2, inter);
+      stroke(c);
+      line(i, y, i, y + h);
+    }
   }
 }
