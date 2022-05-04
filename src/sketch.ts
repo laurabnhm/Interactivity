@@ -196,12 +196,32 @@ function windowResized() {
 //       Drawing
 // -------------------
 
+class MyElement {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  color: string;
+  constructor(x, y, width, height, color) {
+    this.x = x;
+    this.y = y;
+    this.width = width;
+    this.height = height;
+    this.color = color;
+  }
+}
+
+var hoverElement;
+
 function draw() {
   background(255, 255, 255)
   setGradient(
       -width, -height, 2 * width, 2 * height, mauve_color, purple_color,
       Y_AXIS);
   noStroke()
+
+  hoverElement = new MyElement(0, 0, 0, 0, '#FFFFFF')
+
 
   // 1) It's not happening
   var x = 260
@@ -227,6 +247,9 @@ function draw() {
   y = 600
   x += 50
   displayBarGraph(x, y, scienceUnreliable)
+
+  // draw hoverElement at last to get it on top of everything
+  drawHoverElement(hoverElement)
 }
 
 function displayBarGraph(x, y, category) {
@@ -236,6 +259,7 @@ function displayBarGraph(x, y, category) {
         return a
       }
     });
+
     y -= elements.length * 2
     fill(colors[i])
     rect(x, y, 30, elements.length * 2)
@@ -244,14 +268,25 @@ function displayBarGraph(x, y, category) {
     if (mouseX > x && mouseX < (x + 30) && mouseY > (y) &&
         mouseY < (y + elements.length * 2)) {
       displayAuthorInfo(author2[i], elements.length)
+
+      // set hoverElement to later draw it at the end
+      hoverElement = new MyElement(x, y, 30, elements.length * 2, colors[i])
     }
   }
 }
 
 function displayAuthorInfo(name, nbtweets) {
+  noStroke()
   textSize(12)
   textFont('Poppins')
   text(name + ' : ' + nbtweets + ' tweets', 100, 150)
+}
+
+function drawHoverElement(hoverElement) {
+  strokeWeight(2)
+  stroke(255)
+  fill(hoverElement.color)
+  rect(hoverElement.x, hoverElement.y, hoverElement.width, hoverElement.height)
 }
 
 function setGradient(x, y, w, h, color1, color2, axis) {
