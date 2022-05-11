@@ -224,29 +224,34 @@ function draw() {
 
 
   // 1) It's not happening
-  var x = 260
+  var x = 700
   var y = 600
   displayBarGraph(x, y, notHappening)
+  displayBarLegend(x, y, 'It\'s not happening')
 
   // 2) It's not us
   y = 600
-  x += 50
+  x += 70
   displayBarGraph(x, y, notUs)
+  displayBarLegend(x, y, 'It\'s not us')
 
   // 3) It's not bad
   y = 600
-  x += 50
+  x += 70
   displayBarGraph(x, y, notBad)
+  displayBarLegend(x, y, 'It\'s not bad')
 
   // 4) Solutions won't work
   y = 600
-  x += 50
+  x += 70
   displayBarGraph(x, y, solutionNotWorking)
+  displayBarLegend(x, y, 'Solutions won\'t work')
 
   // 5) Climate science/scientists are unreliable
   y = 600
-  x += 50
+  x += 70
   displayBarGraph(x, y, scienceUnreliable)
+  displayBarLegend(x, y, 'Climate science/scientists are unreliable')
 
   // draw hoverElement at last to get it on top of everything
   drawHoverElement(hoverElement)
@@ -275,16 +280,25 @@ function displayBarGraph(x, y, category) {
   }
 }
 
+function displayBarLegend(x, y, title) {
+  push()
+  fill(254, 254, 254)
+  translate(x - 8, y);
+  rotate(radians(-90))
+  text(title, 0, 0)
+  pop()
+}
+
 function displayAuthorInfo(name, nbtweets) {
   noStroke()
   textSize(12)
-  textFont('Poppins')
+  textFont('Outfit')
   text(name + ' : ' + nbtweets + ' tweets', 100, 150)
 }
 
 function drawHoverElement(hoverElement) {
   strokeWeight(2)
-  stroke(255)
+  stroke(254)
   fill(hoverElement.color)
   rect(hoverElement.x, hoverElement.y, hoverElement.width, hoverElement.height)
 }
