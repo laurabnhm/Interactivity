@@ -212,8 +212,10 @@ class MyElement {
 }
 
 var hoverElement;
+var seed = 0
 
 function draw() {
+  randomSeed(seed)
   background(255, 255, 255)
   setGradient(
       -width, -height, 2 * width, 2 * height, mauve_color, purple_color,
@@ -224,7 +226,7 @@ function draw() {
 
 
   // 1) It's not happening
-  var x = 700
+  var x = 200
   var y = 600
   displayBarGraph(x, y, notHappening)
   displayBarLegend(x, y, 'It\'s not happening')
@@ -253,6 +255,7 @@ function draw() {
   displayBarGraph(x, y, scienceUnreliable)
   displayBarLegend(x, y, 'Climate science/scientists are unreliable')
 
+
   // draw hoverElement at last to get it on top of everything
   drawHoverElement(hoverElement)
 }
@@ -272,7 +275,10 @@ function displayBarGraph(x, y, category) {
     // on mouse hover, display author name + nbtweets
     if (mouseX > x && mouseX < (x + 30) && mouseY > (y) &&
         mouseY < (y + elements.length * 2)) {
+      randomSeed(seed);
+      let randomTweetId = random(0, elements.length)
       displayAuthorInfo(author2[i], elements.length)
+      displayAuthorRandomTweet(elements, randomTweetId)
 
       // set hoverElement to later draw it at the end
       hoverElement = new MyElement(x, y, 30, elements.length * 2, colors[i])
@@ -289,11 +295,85 @@ function displayBarLegend(x, y, title) {
   pop()
 }
 
-function displayAuthorInfo(name, nbtweets) {
+function displayAuthorInfo(name, nbTweets) {
+  let x = 650
+  let y = 150
   noStroke()
-  textSize(12)
+  textSize(14)
   textFont('Outfit')
-  text(name + ' : ' + nbtweets + ' tweets', 100, 150)
+  text(name + ' : ' + nbTweets + ' tweets', x, y)
+}
+
+function displayAuthorRandomTweet(elements, randomTweetId) {
+  let x = 650
+  let y = 170
+  textSize(12)
+  fill(254, 254, 254, 150)
+  text(getDate(str(elements[int(randomTweetId)].date)), x, y)
+  text(getSubCategory(str(elements[int(randomTweetId)].category)), x + 100, y)
+  fill(254, 254, 254)
+  text(elements[int(randomTweetId)].text, x, y + 20, 500, 200)
+}
+
+function getSubCategory(category) {
+  if (category == '1_1')
+    return 'Ice isn\'t melting';
+  else if (category == '1_2')
+    return 'Heading into ice age';
+  else if (category == '1_3')
+    return 'Weather is cold';
+  else if (category == '1_4')
+    return 'Hiatus in warming';
+  else if (category == '1_5')
+    return 'Oceans are cooling';
+  else if (category == '1_6')
+    return 'Sea level rise is exaggerated';
+  else if (category == '1_7')
+    return 'Extremes aren\'t increasing';
+  else if (category == '1_8')
+    return 'Changed the name';
+  else if (category == '2_1')
+    return 'It\'s natural cycles';
+  else if (category == '2_2')
+    return 'Non-Greenhouse Gas forcings';
+  else if (category == '2_3')
+    return 'No evidence for Greenhouse Effect';
+  else if (category == '3_1')
+    return 'Sensitivity is low';
+  else if (category == '3_2')
+    return 'No species impact';
+  else if (category == '3_3')
+    return 'Not a pollutant';
+  else if (category == '3_4')
+    return 'Only a few degrees';
+  else if (category == '3_5')
+    return 'No link to conflict';
+  else if (category == '3_6')
+    return 'No health impacts';
+  else if (category == '4_1')
+    return 'Policies are harmful';
+  else if (category == '4_2')
+    return 'Policies are ineffective';
+  else if (category == '4_3')
+    return 'Too hard';
+  else if (category == '4_4')
+    return 'Clean energy won\'t work';
+  else if (category == '4_5')
+    return 'We need energy';
+  else if (category == '5_1')
+    return 'Science is unreliable';
+  else if (category == '5_2')
+    return 'Movement is unreliable';
+  else if (category == '5_3')
+    return 'Climate is conspiracy';
+  else
+    return 'nothing';
+}
+
+function getDate(date) {
+  let dateFormated = date[6] + date[7] + '-' + date[4] + date[5] + '-' +
+      date[0] + date[1] + date[2] + date[3];
+  return dateFormated;
 }
 
 function drawHoverElement(hoverElement) {
@@ -301,6 +381,12 @@ function drawHoverElement(hoverElement) {
   stroke(254)
   fill(hoverElement.color)
   rect(hoverElement.x, hoverElement.y, hoverElement.width, hoverElement.height)
+}
+
+function keyTyped() {
+  if (key == 'r') {
+    seed++
+  }
 }
 
 function setGradient(x, y, w, h, color1, color2, axis) {
