@@ -122,6 +122,19 @@ var colors = [
   '#a7daf1', '#dd87c0', '#eed679', '#9787e8', '#9cebb6'
 ];
 
+var subCategories = [
+  {
+    name: 'It\'s not happening',
+    subCategory: ['1', '2', '3', '4', '5', '6', '7', '8']
+  },
+  {name: 'It\'s not us', subCategory: ['1', '2', '3', '4', '5']},
+  {name: 'It\'s not bad', subCategory: ['1', '2', '3', '4', '5', '6']},
+  {name: 'Solutions won\'t work', subCategory: ['1', '2', '3', '4', '5']}, {
+    name: 'Climate science/scientists are unreliable',
+    subCategory: ['1', '2', '3']
+  }
+];
+
 // Constants
 const Y_AXIS = 1;
 const X_AXIS = 2;
@@ -221,39 +234,67 @@ function draw() {
       -width, -height, 2 * width, 2 * height, mauve_color, purple_color,
       Y_AXIS);
   noStroke()
+  textFont('Outfit')
 
   hoverElement = new MyElement(0, 0, 0, 0, '#FFFFFF')
 
+  var x = 600
 
   // 1) It's not happening
-  var x = 200
-  var y = 600
+  var y = 420
   displayBarGraph(x, y, notHappening)
-  displayBarLegend(x, y, 'It\'s not happening')
+  displayBarLegend(x, y + 45, 'It\'s not happening')
+  displayBarSubCategory(x + 40, y, notHappening, 0)
 
   // 2) It's not us
-  y = 600
-  x += 70
+  y += 70
   displayBarGraph(x, y, notUs)
-  displayBarLegend(x, y, 'It\'s not us')
+  displayBarLegend(x, y + 45, 'It\'s not us')
+  displayBarSubCategory(x + 40, y, notUs, 1)
 
   // 3) It's not bad
-  y = 600
-  x += 70
+  y += 70
   displayBarGraph(x, y, notBad)
-  displayBarLegend(x, y, 'It\'s not bad')
+  displayBarLegend(x, y + 45, 'It\'s not bad')
+  displayBarSubCategory(x + 40, y, notBad, 2)
 
   // 4) Solutions won't work
-  y = 600
-  x += 70
+  y += 70
   displayBarGraph(x, y, solutionNotWorking)
-  displayBarLegend(x, y, 'Solutions won\'t work')
+  displayBarLegend(x, y + 45, 'Solutions won\'t work')
+  displayBarSubCategory(x + 40, y, solutionNotWorking, 3)
 
   // 5) Climate science/scientists are unreliable
-  y = 600
-  x += 70
+  y += 70
   displayBarGraph(x, y, scienceUnreliable)
-  displayBarLegend(x, y, 'Climate science/scientists are unreliable')
+  displayBarLegend(x, y + 45, 'Climate science/scientists are unreliable')
+  displayBarSubCategory(x + 40, y, scienceUnreliable, 4)
+
+  // title
+  fill(254, 254, 254)
+  textAlign(LEFT, BASELINE)
+  textSize(30)
+  // textStyle(BOLD)
+  text('Climate misinformation tweets', 90, 100)
+  textSize(18)
+  fill(254, 254, 254, 200)
+  textStyle(NORMAL)
+  text('Distribution of tweets by author according to their category', 90, 130)
+
+  // legend
+  fill(254, 254, 254, 150)
+  textSize(16)
+  textAlign(RIGHT, BASELINE)
+  text('Categories', x, y + 80)
+  textAlign(LEFT, BASELINE)
+  text('Sub-categories', x + 40, y + 80)
+
+  // names
+  fill(254, 254, 254, 150)
+  textSize(12)
+  textAlign(RIGHT, BASELINE)
+  text('Candice BRANCHEREAU', 1200, 100)
+  text('Laura BONHOMME', 1200, 120)
 
 
   // draw hoverElement at last to get it on top of everything
@@ -268,51 +309,96 @@ function displayBarGraph(x, y, category) {
       }
     });
 
-    y -= elements.length * 2
+    x -= elements.length * 2
     fill(colors[i])
-    rect(x, y, 30, elements.length * 2)
+    rect(x, y, elements.length * 2, 30)
 
     // on mouse hover, display author name + nbtweets
-    if (mouseX > x && mouseX < (x + 30) && mouseY > (y) &&
-        mouseY < (y + elements.length * 2)) {
+    if (mouseX > (x) && mouseX < (x + elements.length * 2) && mouseY > (y) &&
+        mouseY < (y + 30)) {
       randomSeed(seed);
       let randomTweetId = random(0, elements.length)
       displayAuthorInfo(author2[i], elements.length)
       displayAuthorRandomTweet(elements, randomTweetId)
 
       // set hoverElement to later draw it at the end
-      hoverElement = new MyElement(x, y, 30, elements.length * 2, colors[i])
+      hoverElement = new MyElement(x, y, elements.length * 2, 30, colors[i])
     }
   }
 }
 
 function displayBarLegend(x, y, title) {
-  push()
+  textAlign(RIGHT, BASELINE);
+  textSize(12)
   fill(254, 254, 254)
-  translate(x - 8, y);
-  rotate(radians(-90))
-  text(title, 0, 0)
-  pop()
+  text(title, x, y)
+}
+
+function displayBarSubCategory(x, y, category, id) {
+  for (var i = 0; i < subCategories[id].subCategory.length; i++) {
+    let elements = category.filter((a) => {
+      if (a.category[2] == subCategories[id].subCategory[i]) {
+        return a
+      }
+    });
+
+    if (elements.length > 0) {
+      fill(255, 255, 255, 150)
+      rect(x, y, elements.length * 2, 30)
+      x += elements.length * 2 + 4
+    }
+
+    // on mouse hover, display author name + nbtweets
+    if (mouseX > (x - elements.length * 2) && mouseX < (x) && mouseY > (y) &&
+        mouseY < (y + 30)) {
+      // display nb tweets
+      textAlign(CENTER, CENTER);
+      fill(254, 254, 254, 255)
+      text(elements.length, x - elements.length - 4, y + 15)
+
+      displaySubCategory(
+          x - elements.length * 2 - 4, y + 45,
+          getSubCategory(str(elements[0].category)))
+
+      // set hoverElement to later draw it at the end
+      hoverElement =
+          new MyElement(x - 4, y, -elements.length * 2, 30, '#fefefe00')
+    }
+  }
 }
 
 function displayAuthorInfo(name, nbTweets) {
-  let x = 650
-  let y = 150
+  textAlign(LEFT, BASELINE);
+
+  let x = 375
+  let y = 245
   noStroke()
-  textSize(14)
-  textFont('Outfit')
+  textSize(16)
   text(name + ' : ' + nbTweets + ' tweets', x, y)
+
+  // rect tweet
+  stroke(254)
+  fill(254, 254, 254, 20)
+  rect(x - 10, y - 25, 510, 150)
+  noStroke()
 }
 
 function displayAuthorRandomTweet(elements, randomTweetId) {
-  let x = 650
-  let y = 170
+  let x = 375
+  let y = 275
   textSize(12)
   fill(254, 254, 254, 150)
   text(getDate(str(elements[int(randomTweetId)].date)), x, y)
   text(getSubCategory(str(elements[int(randomTweetId)].category)), x + 100, y)
   fill(254, 254, 254)
-  text(elements[int(randomTweetId)].text, x, y + 20, 500, 200)
+  text(elements[int(randomTweetId)].text, x, y + 20, 500, 70)
+}
+
+function displaySubCategory(x, y, subCategory) {
+  textAlign(LEFT, BASELINE);
+  textSize(12)
+  fill(254, 254, 254)
+  text(subCategory, x, y)
 }
 
 function getSubCategory(category) {
@@ -386,6 +472,44 @@ function drawHoverElement(hoverElement) {
 function keyTyped() {
   if (key == 'r') {
     seed++
+  }
+}
+
+const centerX = 700;
+const centerY = 520;
+
+const size = 500;
+
+const outerRadius = 95;
+const innerRadius = 55;
+
+const conditions = [
+  {'name': 'rain', 'days': 6, 'color': '#38669a'},
+  {'name': 'partly cloudy', 'days': 23, 'color': '#8EC3E6'},
+
+  {'name': 'clear', 'days': 2, 'color': '#fef017'}
+];
+
+function drawDonutChart(category) {
+  noStroke();
+  ellipseMode(RADIUS);
+  let angleStart = -HALF_PI;  // start at the top
+  for (let i = 0; i < author2.length; i++) {
+    let elements = category.filter((a) => {
+      if (a.author == author2[i] && params[author2[i]] == true) {
+        return a
+      }
+    });
+    fill(colors[i]);
+    let wedgeSize = map(elements.length * 2, 0, size, 0, TAU);
+    let angleStop = angleStart + wedgeSize;
+    arc(centerX, centerY, outerRadius, outerRadius, angleStart, angleStop);
+    angleStart = angleStop;
+
+
+    // knock a hole out of the middle
+    fill(255);
+    ellipse(centerX, centerY, innerRadius, innerRadius);
   }
 }
 
