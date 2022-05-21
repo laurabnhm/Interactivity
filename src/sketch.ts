@@ -122,6 +122,7 @@ var colors = [
   '#a7daf1', '#dd87c0', '#eed679', '#9787e8', '#9cebb6'
 ];
 
+// list of ids of sub-categories
 var subCategories = [
   {
     name: 'It\'s not happening',
@@ -141,6 +142,7 @@ const X_AXIS = 2;
 let mauve_color, purple_color, color1, color2;
 
 function preload() {
+  // load json of tweets
   tweets = loadJSON('../src/tweetszkm_202203.json');
 }
 
@@ -151,7 +153,7 @@ function setup() {
       filteredTweet.push(tweets[i])
   }
 
-  // Filter tweets according category
+  // Filter tweets according to the category
 
   // 1) It's not happening
   notHappening = filteredTweet.filter((a) => {
@@ -159,7 +161,6 @@ function setup() {
       return a
     }
   });
-  console.log(notHappening)
 
   // 2) It's not us
   notUs = filteredTweet.filter((a) => {
@@ -167,7 +168,6 @@ function setup() {
       return a
     }
   });
-  console.log(notUs)
 
   // 3) It's not bad
   notBad = filteredTweet.filter((a) => {
@@ -175,7 +175,6 @@ function setup() {
       return a
     }
   });
-  console.log(notBad)
 
   // 4) Solutions won't work
   solutionNotWorking = filteredTweet.filter((a) => {
@@ -183,7 +182,6 @@ function setup() {
       return a
     }
   });
-  console.log(solutionNotWorking)
 
   // 5) Climate science/scientists are unreliable
   scienceUnreliable = filteredTweet.filter((a) => {
@@ -191,7 +189,6 @@ function setup() {
       return a
     }
   });
-  console.log(scienceUnreliable)
 
   p6_CreateCanvas()
 
@@ -236,6 +233,7 @@ function draw() {
   noStroke()
   textFont('Outfit')
 
+  // set a default hover element
   hoverElement = new MyElement(0, 0, 0, 0, '#FFFFFF')
 
   var x = 600
@@ -270,18 +268,18 @@ function draw() {
   displayBarLegend(x, y + 45, 'Climate science/scientists are unreliable')
   displayBarSubCategory(x + 40, y, scienceUnreliable, 4)
 
-  // title
+
+  // titles
   fill(254, 254, 254)
   textAlign(LEFT, BASELINE)
   textSize(30)
-  // textStyle(BOLD)
   text('Climate misinformation tweets', 90, 100)
   textSize(18)
   fill(254, 254, 254, 200)
   textStyle(NORMAL)
   text('Distribution of tweets by author according to their category', 90, 130)
 
-  // legend
+  // legends
   fill(254, 254, 254, 150)
   textSize(16)
   textAlign(RIGHT, BASELINE)
@@ -301,14 +299,18 @@ function draw() {
   drawHoverElement(hoverElement)
 }
 
+// display the category repartition according to authors with a size
+// proportional to the number of tweets by author
 function displayBarGraph(x, y, category) {
   for (var i = 0; i < author2.length; i++) {
+    // Filter tweets according to the author
     let elements = category.filter((a) => {
       if (a.author == author2[i] && params[author2[i]] == true) {
         return a
       }
     });
 
+    // draw rect with the number of tweets as the size
     x -= elements.length * 2
     fill(colors[i])
     rect(x, y, elements.length * 2, 30)
@@ -334,14 +336,18 @@ function displayBarLegend(x, y, title) {
   text(title, x, y)
 }
 
+// display the category repartition according to sub-categories with a size
+// proportional to the number of tweets by sub-categorie
 function displayBarSubCategory(x, y, category, id) {
   for (var i = 0; i < subCategories[id].subCategory.length; i++) {
+    // Filter tweets according to the sub-categorie
     let elements = category.filter((a) => {
       if (a.category[2] == subCategories[id].subCategory[i]) {
         return a
       }
     });
 
+    // draw rect with the number of tweets as the size
     if (elements.length > 0) {
       fill(255, 255, 255, 150)
       rect(x, y, elements.length * 2, 30)
@@ -356,6 +362,7 @@ function displayBarSubCategory(x, y, category, id) {
       fill(254, 254, 254, 255)
       text(elements.length, x - elements.length - 4, y + 15)
 
+      // display sub-category name
       displaySubCategory(
           x - elements.length * 2 - 4, y + 45,
           getSubCategory(str(elements[0].category)))
@@ -367,6 +374,7 @@ function displayBarSubCategory(x, y, category, id) {
   }
 }
 
+// display author name with the number of tweets in the specific category
 function displayAuthorInfo(name, nbTweets) {
   textAlign(LEFT, BASELINE);
 
@@ -383,6 +391,7 @@ function displayAuthorInfo(name, nbTweets) {
   noStroke()
 }
 
+// display a random tweet with date and subcategory
 function displayAuthorRandomTweet(elements, randomTweetId) {
   let x = 375
   let y = 275
@@ -394,6 +403,7 @@ function displayAuthorRandomTweet(elements, randomTweetId) {
   text(elements[int(randomTweetId)].text, x, y + 20, 500, 70)
 }
 
+// displasy sub-category name
 function displaySubCategory(x, y, subCategory) {
   textAlign(LEFT, BASELINE);
   textSize(12)
@@ -401,6 +411,7 @@ function displaySubCategory(x, y, subCategory) {
   text(subCategory, x, y)
 }
 
+// get sub-category name according to the id
 function getSubCategory(category) {
   if (category == '1_1')
     return 'Ice isn\'t melting';
@@ -456,12 +467,14 @@ function getSubCategory(category) {
     return 'nothing';
 }
 
+// get date in a better format
 function getDate(date) {
   let dateFormated = date[6] + date[7] + '-' + date[4] + date[5] + '-' +
       date[0] + date[1] + date[2] + date[3];
   return dateFormated;
 }
 
+// draw hover element (function called at the end to be on top of everything)
 function drawHoverElement(hoverElement) {
   strokeWeight(2)
   stroke(254)
@@ -475,44 +488,7 @@ function keyTyped() {
   }
 }
 
-const centerX = 700;
-const centerY = 520;
-
-const size = 500;
-
-const outerRadius = 95;
-const innerRadius = 55;
-
-const conditions = [
-  {'name': 'rain', 'days': 6, 'color': '#38669a'},
-  {'name': 'partly cloudy', 'days': 23, 'color': '#8EC3E6'},
-
-  {'name': 'clear', 'days': 2, 'color': '#fef017'}
-];
-
-function drawDonutChart(category) {
-  noStroke();
-  ellipseMode(RADIUS);
-  let angleStart = -HALF_PI;  // start at the top
-  for (let i = 0; i < author2.length; i++) {
-    let elements = category.filter((a) => {
-      if (a.author == author2[i] && params[author2[i]] == true) {
-        return a
-      }
-    });
-    fill(colors[i]);
-    let wedgeSize = map(elements.length * 2, 0, size, 0, TAU);
-    let angleStop = angleStart + wedgeSize;
-    arc(centerX, centerY, outerRadius, outerRadius, angleStart, angleStop);
-    angleStart = angleStop;
-
-
-    // knock a hole out of the middle
-    fill(255);
-    ellipse(centerX, centerY, innerRadius, innerRadius);
-  }
-}
-
+// Background gradient
 function setGradient(x, y, w, h, color1, color2, axis) {
   noFill();
 
