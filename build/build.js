@@ -100,7 +100,7 @@ var Y_AXIS = 1;
 var X_AXIS = 2;
 var mauve_color, purple_color, color1, color2;
 function preload() {
-    tweets = loadJSON('../../tweetszkm_202203.json');
+    tweets = loadJSON('https://corseverywherelibert.herokuapp.com/mobitool.free.fr/edu/dd/data/tweetszkm_202203.json');
 }
 function setup() {
     for (var i = 0; i < 5364; ++i) {
