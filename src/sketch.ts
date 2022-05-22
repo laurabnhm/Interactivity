@@ -143,8 +143,7 @@ let mauve_color, purple_color, color1, color2;
 
 function preload() {
   // load json of tweets
-  tweets =
-      loadJSON('http://mobitool.free.fr/edu/dd/data/tweetszkm_202203.json');
+  tweets = loadJSON('../../tweetszkm_202203.json');
 }
 
 function setup() {
